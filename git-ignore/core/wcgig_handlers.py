@@ -1,7 +1,7 @@
 # wcgig_handlers.py
 # Created: 12/26/24
-# Version: 0.0.0.002
-# Last Changed: 01/04/2025
+# Version: 0.0.0.003
+# Last Changed: 10/28/2025
 
 from pathlib import Path
 from os import getcwd
