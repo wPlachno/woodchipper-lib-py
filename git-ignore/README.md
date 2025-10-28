@@ -24,7 +24,7 @@ gignore add [target]
 gignore remove [target]
 gignore clear
 ```
-As an aside, the WCCore system was implemented to assume that different modes of usage should be written out and flag-like arguments should be contrained to only affecting the work of modes.
+As an aside, the WCCore system was implemented to assume that different modes of usage should be written out and flag-like arguments should be constrained to only affecting the work of modes.
 
 ## TODO:
 
