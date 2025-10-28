@@ -11,5 +11,8 @@ class WoodchipperGignorePrinter(WCPrinter):
         WCPrinter.__init__(self, request, response)
 
     def print(self):
-        for node in self.data.nodes:
-            self.printer.pr(describe_node(node["name"], node["status"]), Verbosity.NORMAL)
+        if self.data.success:
+            for node in self.data.nodes:
+                self.printer.pr(describe_node(node["name"], node["status"]), Verbosity.NORMAL)
+        else:
+            self.printer.pr(self.data.error, Verbosity.NORMAL)
