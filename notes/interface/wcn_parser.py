@@ -1,17 +1,17 @@
 # wcn_parser.py
 # Written by: Will Plachno
 # Created: 01/04/2025
-# Version: 0.0.1.002
-# Last Changed: 01/08/2025
+# Version: 0.0.1.003
+# Last Changed: 10/28/2025
 
 from utilities.wcparser import CLParser as WCParser
 from constants import MODE, SECTION
 
 def build_parser():
     parser = WCParser("wcn",
-                      version="0.0.2.000",
+                      version="0.0.2.002",
                       description="A system for taking notes in the terminal that are localized to the working directory.",
-                      footer="Created by Will Plachno. Copyright 2024.")
+                      footer="Created by Will Plachno. Copyright 2025.")
     parser.add_argument("mode", choices=[MODE.SHOW, MODE.ADD, MODE.REMOVE, MODE.MOVE, MODE.UPDATE, MODE.REPLACE, MODE.CLEAR], default=MODE.DEFAULT,
                         description="The mode we are operating in.\n  show - Lists notes\n  add - Adds a note\n  remove - Removes a note\n  move - Moves a note from one index to another\n  update - Changes a notes text\n  replace - Replaces a note completely\n  clear - Removes all notes")
     parser.add_argument("target", nargs="+",
