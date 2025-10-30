@@ -1,8 +1,8 @@
 # fm_parser.py
 # Written by: Will Plachno
 # Created: 01/11/2025
-# Version: 0.0.1.006
-# Last Changed: 01/30/2025
+# Version: 0.0.1.007
+# Last Changed: 11/29/2025
 
 from os import getcwd
 from pathlib import Path
@@ -13,7 +13,7 @@ from constants import MODE
 
 def build_parser():
     parser = WCParser("frontmat",
-                      version="0.0.2.001",
+                      version="0.0.2.002",
                       description="Allows for mass edits of YAML Frontmatter in Obsidian Markdown directories.",
                       footer="Created by Will Plachno. Copyright 2025.")
     parser.add_argument("mode", choices=[MODE.SHOW, MODE.ADD, MODE.REMOVE, MODE.SET, MODE.CHANGE, MODE.SUMMARIZE], default=MODE.SUMMARIZE,
