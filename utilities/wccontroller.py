@@ -9,18 +9,18 @@ class WoodchipperController:
         self.request = None
         self.data = None
         self.handlers = handlers
-        self.results = WCResponse()
+        self.response = WCResponse()
 
     def process_request(self, process_request):
         self.request = process_request
-        self.results.build_from_request(self.request)
+        self.response.build_from_request(self.request)
         handler_id = self.request.mode
         if handler_id:
-            self.results.mode = handler_id
+            self.response.mode = handler_id
             handler_type = self.handlers[handler_id]
-            handler = handler_type(self.request, self.results)
+            handler = handler_type(self.request, self.response)
             self.data = handler.run()
-            self.results.data = self.data
-            self.results.success = True
+            self.response.data = self.data
+            self.response.success = True
         else:
-            self.results.error = "Unable to figure out which handler should operate on the request."
+            self.response.error = "Unable to figure out which handler should operate on the request."

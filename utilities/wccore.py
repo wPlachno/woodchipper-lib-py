@@ -47,7 +47,7 @@ class WoodchipperCore:
         process_request = cli.process_request(sys.argv)
         if not process_request.mode == "none":
             control.process_request(process_request)
-            cli.display_results(control.results)
+            cli.display_results(control.response)
 
     def build_parser_function(self) -> WCParser:
         parser = self.parser_builder()
