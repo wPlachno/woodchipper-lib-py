@@ -29,11 +29,11 @@ class WoodchipperCommandLineInterface:
             self.printer.nl(Verbosity.DEBUG)
         return self.request
 
-    def display_results(self, results):
-        self._print_response(results, Verbosity.DEBUG)
+    def display_results(self, response):
+        self._print_response(response, Verbosity.DEBUG)
         self.printer.nl(Verbosity.DEBUG)
-        printer_type = self.printers[results.mode]
-        printer_obj = printer_type(results, self.printer)
+        printer_type = self.printers[response.mode]
+        printer_obj = printer_type(response, self.printer)
         printer_obj.print()
 
     def _check_config(self):
