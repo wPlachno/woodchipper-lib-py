@@ -1,8 +1,8 @@
 """
 wcutil.py
 Created by Will Plachno on 11/30/23
-Version: 0.0.1.016
-Last Changes: 01/22/2025
+Version: 0.0.1.017
+Last Changes: 12/16/2025
 
 Woodchipper Utilities
 An assortment of helpful functions and classes.
@@ -15,6 +15,7 @@ Includes:
 - -- WoodchipperFile: A simple class for reading in the lines of a
         file into an array.
 - -- WoodchipperSettingsFile: A class for handling a settings file.
+- -- WoodchipperSerializationFile: A class for serialization of lists
 
 - Functions:_______________________________________________________
 - -- bool2Str: Converts a bool into either "on" or "off". Passing
@@ -85,9 +86,10 @@ Wishlist:
 
 """
 import pathlib
+from typing import Callable, Any, List
 from datetime import datetime
 from functools import reduce
-from pathlib import PosixPath
+from pathlib import PosixPath, Path
 from types import SimpleNamespace
 
 import utilities.wcconstants as s
@@ -698,6 +700,84 @@ class WoodchipperSettingsFile(WoodchipperDictionaryFile):
     def print(self, text, verbosity=s.Verbosity.NORMAL):
         if self.get_debug() or self.verbosity >= verbosity:
             print(text)
+
+
+""" WoodchipperSerializationFile
+#
+#       A serialization file. Uses a file path, a line_reader callable, 
+#   and a line_reader callable to read and save lists of items to a file.
+#
+### Usage
+#
+#       During initialization, provide the file path and the callables.
+#   Then, when you need a list of the items, call `read()`. Call `save()`
+#   when appropriate. 
+#       Note the following:
+#   - The line_reader callable should take a stripped string, and convert
+#     it into the appropriate object.
+#   - Likewise, the line_writer callable should take an object and reflect
+#     it back into a stripped string.
+#   - `read()` will create the file if it does not exist.
+#   - `save()` rewrites the entire file each time.
+#   - 
+#
+### Methods
+"""
+
+class WoodchipperSerializationFile:
+
+    def __init__(self, file_path:str | Path, line_reader: Callable[[str],Any], line_writer: Callable[[List[Any]],str]):
+        # self._file_path: Path = Path.home() / FILE_NAME
+        self._file_path: Path = Path(file_path).resolve()
+        self._line_reader:Callable[[str],Any] = line_reader
+        self._line_writer:Callable[[List[Any]],str] = line_writer
+
+    def read(self) -> List[Any]:
+        item_list: List[Any] = []
+
+        if not self._file_path.exists():
+            try:
+                open(self._file_path, s.FILE_IO.EXCLUSIVE_CREATION).close()
+                return item_list
+            except OSError:
+                raise Exception(f"Could not instantiate file {str(self._file_path)}")
+        else:
+            try:
+                with open(self._file_path, s.FILE_IO.READ) as file:
+                    for raw_line in file:
+                        line = str(raw_line.strip())
+                        if len(line) > 0:
+                            item_list.append(self._line_reader(line))
+                return item_list
+            except FileNotFoundError:
+                raise FileNotFoundError(f"File not found: {str(self._file_path)}.")
+            except PermissionError:
+                raise PermissionError(f"Do not have permissions for {str(self._file_path)}.")
+            except IsADirectoryError:
+                raise IsADirectoryError(f"Found directory instead of file at {str(self._file_path)}.")
+            except OSError as e:
+                raise OSError(e, f"Could not read {str(self._file_path)}.")
+
+    def save(self, items: List[Any]) -> str:
+        try:
+            file_text: str = ""
+            with open(self._file_path, s.FILE_IO.WRITE) as file:
+                for item in items:
+                    item_text: str = f"{self._line_writer(item)}\n"
+                    try:
+                        file.write(item_text)
+                    except UnicodeEncodeError:
+                        raise ValueError(f"Could not encode {item_text} to {str(self._file_path)}")
+                    file_text += item_text
+            return file_text
+        except FileNotFoundError:
+            raise FileNotFoundError(f"File not found: {str(self._file_path)}.")
+        except PermissionError:
+            raise PermissionError(f"Do not have permissions for {str(self._file_path)}.")
+        except IsADirectoryError:
+            raise IsADirectoryError(f"Found directory instead of file at {str(self._file_path)}.")
+        except OSError as e:
+            raise OSError(e, f"Could not read {str(self._file_path)}.")
 
 
 """ FUNCTIONS ---------------------------------------------------- """
