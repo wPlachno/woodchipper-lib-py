@@ -112,13 +112,13 @@ class CL_TASK:
     TEST_FAIL =     CL_GENERAL.TASK+clr("Test Failed", COLOR.SUB)   +KEY.DH+clr(OP[0], COLOR.CANCEL) +KEY.NL
 
 class FILE_IO:
-    READ = "r"
-    WRITE = "w"
-    EXCLUSIVE_CREATION = "x"
-    APPEND = "a"
-    BINARY = "b"
-    TEXT = "t"
-    READ_AND_WRITE = "+"
+    READ = "r" # File must exist
+    WRITE = "w" # File may not exist, replaces if it does.
+    EXCLUSIVE_CREATION = "x" # File must not exist.
+    APPEND = "a" # File may not exist, new writes at end of existing. Note that combining with READ_AND_WRITE, the file pointer will be at the end of the file.
+    BINARY = "b" # File will be in bytes
+    TEXT = "t" # File will be in strings
+    READ_AND_WRITE = "+" # Allows for reading and writing.
 
 def format_success(success):
     return CL_GENERAL.SUCCESS if success else CL_GENERAL.FAILURE
