@@ -1,8 +1,8 @@
 """
 wcconstants.py
 Created by Will Plachno on 09/07/24
-Version: 0.0.1.014
-Last Changes: 01/20/2025
+Version: 0.0.1.015
+Last Changes: 12/16/2025
 
 Woodchipper Constants
 An assortment of helpful strings and other constants.
@@ -115,6 +115,10 @@ class FILE_IO:
     READ = "r"
     WRITE = "w"
     EXCLUSIVE_CREATION = "x"
+    APPEND = "a"
+    BINARY = "b"
+    TEXT = "t"
+    READ_AND_WRITE = "+"
 
 def format_success(success):
     return CL_GENERAL.SUCCESS if success else CL_GENERAL.FAILURE
