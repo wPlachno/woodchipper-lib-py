@@ -1,7 +1,7 @@
 # nav_printer.py
 # Written by: Will Plachno
 # Created: 12/17/2025
-# Version: 0.0.1.001
+# Version: 0.0.1.002
 # Last Changed: 12/29/2025
 
 from navigation.constants import RESULTS, CHANGE, SHOWALL
@@ -52,3 +52,19 @@ class BookmarkShowPrinter(BookmarkPrinter):
             else:
                 if self.changelist[0][0] == RESULTS.STATUS.FOUND:
                     self.printer.pr(self.changelist[0][2], Verbosity.RESULTS_ONLY)
+
+class BookmarkPortPrinter(WoodchipperCoreModePrinter):
+    def __init__(self, response: any, printer: WoodchipperToolkitPrinter):
+        super().__init__(response, printer)
+        self.port:str = self.data.port
+        self.filepath:str = self.data.filepath
+
+    def print(self):
+        if self.printer.verbosity == Verbosity.RESULTS_ONLY:
+            text = CL_GENERAL.SUCCESS if self.data.success else CL_GENERAL.FAILURE
+            self.printer.pr(text, Verbosity.RESULTS_ONLY)
+        elif self.printer.verbosity >= Verbosity.NORMAL:
+            if not self.data.success:
+                self.printer.error(self.data.error, new_line=False)
+            else:
+                self.printer.pr(CHANGE.FRAME[self.port].format(self.filepath))

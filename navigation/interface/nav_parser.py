@@ -1,8 +1,8 @@
 # nav_parser.py
 # Written by: Will Plachno
 # Created: 12/15/2025
-# Version: 0.0.1.001
-# Last Changed: 12/15/2025
+# Version: 0.0.1.002
+# Last Changed: 12/29/2025
 
 from os import getcwd
 from pathlib import Path
@@ -32,6 +32,10 @@ def build_parser() -> WCParser:
 def post_parser(raw_request:any) -> any:
     request = raw_request
     setattr(request, "cwd", Path(getcwd()))
+    if request.label == MODE.EXPORT:
+        request.mode = MODE.EXPORT
+    elif request.label == MODE.IMPORT:
+        request.mode = MODE.IMPORT
     return request
 
 def path_shaper(text: str) -> Path:

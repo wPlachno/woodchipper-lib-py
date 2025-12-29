@@ -38,10 +38,10 @@ navto() {
 - For the `navto` alias, things are easier if we use a Bash function instead of an alias. Note that this does take into account all output, so we should make sure the script is only outputting a path, without any color or formatting.
 
 ## ToDo
-- Add autosort of bookmarks by path.
 - Add Import/Export features.
 - Add tab autocomplete for labels.
 
 ## Work Log
+- 12/29/2025 - Added autosort of bookmark by path.
 - 12/29/2025 - Wrote the README.md
 - 12/17/2025 - Finished first draft of implementation.

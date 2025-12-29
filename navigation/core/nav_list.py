@@ -1,7 +1,7 @@
 # nav_list.py
 # Written by: Will Plachno
 # Created: 12/15/2025
-# Version: 0.0.1.002
+# Version: 0.0.1.003
 # Last Changed: 12/29/2025
 
 from pathlib import Path
@@ -18,8 +18,10 @@ class BookmarkList:
     type BookmarkSource = Bookmark | tuple[str, Path]
     type BookmarkChange = tuple[Bookmark, Bookmark]
 
-    def __init__(self):
+    def __init__(self, path:Optional[Path]=None):
         file_path: Path = Path.home() / FILE_NAME
+        if path:
+            file_path=path.resolve()
         self._ledger:WCSerialFile = WCSerialFile(file_path, create_bookmark_from_line, create_line_from_bookmark)
         self._bookmarks: list[Bookmark] = self._ledger.read()
 
@@ -28,6 +30,9 @@ class BookmarkList:
 
     def get_list(self)-> list[Bookmark]:
         return self._bookmarks
+
+    def set_list(self, bookmarks:list[Bookmark]):
+        self._bookmarks = bookmarks
 
     def find(self, test: LabelSource) -> Optional[Bookmark]:
         for bookmark in self._bookmarks:

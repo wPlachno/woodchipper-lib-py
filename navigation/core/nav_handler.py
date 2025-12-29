@@ -74,7 +74,7 @@ class BookmarkSetHandler(BookmarkHandler):
             self.compile_success()
 
 
-class BookmarksRemoveHandler(BookmarkHandler):
+class BookmarkRemoveHandler(BookmarkHandler):
     def handle(self):
         if not self.source:
             self.add_entry(RESULTS.STATUS.MISSING, self.target)
@@ -101,3 +101,23 @@ class BookmarkShowHandler(BookmarkHandler):
             for bookmark in self.list.get_list():
                 self.add_entry(RESULTS.STATUS.FOUND, bookmark)
             self.compile_success(save=False)
+
+class BookmarkExportHandler(BookmarkHandler):
+    def __init__(self, request, response):
+        super().__init__(request, response)
+        self.log_kvp(RESULTS.PORT.KEY, self.mode)
+        self.log_kvp(RESULTS.PORT.FILE, str(self.path))
+        self.target_file = BookmarkList(self.path)
+        self.source = self.list
+        self.destination = self.target_file
+
+    def handle(self):
+        self.destination.set_list(self.source.get_list())
+        self.destination.save()
+        self.log_success()
+
+class BookmarkImportHandler(BookmarkExportHandler):
+    def __init__(self, request, response):
+        super().__init__(request, response)
+        self.source = self.target_file
+        self.destination = self.list

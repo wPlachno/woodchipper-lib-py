@@ -1,21 +1,21 @@
 # constants.py
 # Written by: Will Plachno
 # Created: 12/15/25
-# Version: 0.0.1.001
-# Last Changed: 12/17/25
+# Version: 0.0.1.003
+# Last Changed: 12/29/25
 
 from utilities.wcconstants import COLOR, clr, OP
 
 class META:
     NAME="nav"
-    VERSION="0.0.1.001"
+    VERSION="0.0.2.001"
     DESCRIPTION="A bookmark system for the command-line. Note that due to terminal limitations, the script cannot effect the working directory of the terminal directly. Use aliases to work around this."
     FOOTER="Created by Will Plachno. Copyright 2025."
 
 class ARGS:
     class MODE:
         NAME="mode"
-        DESCRIPTION="Which mode nav will operate in.\n - show: List all bookmarks. If a bookmark label is included, will output the associated directory path.\n - add: Given a bookmark label and a directory path, will add the bookmark to the list. If no directory path is included, will use the current working directory.\n - set: Given a label and a directory path, will edit the label to match the given path. If no path is included, will use the working directory.\n - remove: Given a label, will remove the bookmark from the list."
+        DESCRIPTION="Which mode nav will operate in.\n - show: List all bookmarks. If a bookmark label is included, will output the associated directory path.\n - add: Given a bookmark label and a directory path, will add the bookmark to the list. If no directory path is included, will use the current working directory.\n - set: Given a label and a directory path, will edit the label to match the given path. If no path is included, will use the working directory.\n - remove: Given a label, will remove the bookmark from the list.\n - export: Exports the current list of bookmarks to the given file path.\n -import: Imports a bookmark list from the given file."
     class LABEL:
         NAME="label"
         DESCRIPTION="The label of a target bookmark. Only required for add, set, and remove modes, though including it with show mode will print the directory path."
@@ -28,6 +28,8 @@ class MODE:
     ADD="add"
     SET="set"
     REMOVE="remove"
+    IMPORT="import"
+    EXPORT="export"
 
 class RESULTS:
     CHANGELIST="changelist"
@@ -42,6 +44,11 @@ class RESULTS:
         ADDED="added"
         REMOVED="removed"
         UPDATED="updated"
+    class PORT:
+        KEY="port"
+        IMPORT="import"
+        EXPORT="export"
+        FILE="filepath"
     type ChangelistEntry = tuple[str,str,str]
 
 class CHANGE:
@@ -50,7 +57,9 @@ class CHANGE:
         "missing": f"{clr("? "+OP[0], COLOR.CANCEL)}: {clr(OP[1], COLOR.SUB)}",
         "added": f"{clr("+ "+OP[0], COLOR.ACTIVE)}: {clr(OP[1], COLOR.SUB)}",
         "removed": f"{clr("- "+OP[0], COLOR.ACTIVE)}: {clr(OP[1], COLOR.SUB)}",
-        "updated": f"{clr("= "+OP[0], COLOR.ACTIVE)}: {clr(OP[1], COLOR.SUB)}"
+        "updated": f"{clr("= "+OP[0], COLOR.ACTIVE)}: {clr(OP[1], COLOR.SUB)}",
+        "export": f"Exported bookmarks to {clr(OP[0], COLOR.SIBLING)}",
+        "import": f"Imported bookmarks from {clr(OP[0], COLOR.SIBLING)}"
     }
 class SHOWALL:
     ITEM = f"- {clr(OP[0], COLOR.SIBLING)}: {clr(OP[1], COLOR.SUB)}"

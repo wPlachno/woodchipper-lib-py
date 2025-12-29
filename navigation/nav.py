@@ -33,8 +33,16 @@ def _main(args):
         printers.BookmarkPrinter)
     core.add_mode(
         MODE.REMOVE,
-        handlers.BookmarksRemoveHandler,
+        handlers.BookmarkRemoveHandler,
         printers.BookmarkPrinter)
+    core.add_mode(
+        MODE.EXPORT,
+        handlers.BookmarkExportHandler,
+        printers.BookmarkPortPrinter)
+    core.add_mode(
+        MODE.IMPORT,
+        handlers.BookmarkImportHandler,
+        printers.BookmarkPortPrinter)
     core.run()
 
 if __name__ == "__main__":
