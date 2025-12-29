@@ -1,8 +1,8 @@
 # nav_list.py
 # Written by: Will Plachno
 # Created: 12/15/2025
-# Version: 0.0.1.001
-# Last Changed: 12/15/2025
+# Version: 0.0.1.002
+# Last Changed: 12/29/2025
 
 from pathlib import Path
 import copy
@@ -67,6 +67,7 @@ class BookmarkList:
         raise ValueError(ERROR.REMOVE_MISSING_BOOKMARK.format(target_bookmark.get_label()))
 
     def save(self) -> None:
+        self._bookmarks.sort()
         self._ledger.save(self._bookmarks)
 
 

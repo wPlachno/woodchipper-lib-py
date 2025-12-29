@@ -1,8 +1,8 @@
 # nav_bookmark.py
 # Written by: Will Plachno
 # Created: 12/15/2025
-# Version: 0.0.1.001
-# Last Changed: 12/15/2025
+# Version: 0.0.1.002
+# Last Changed: 12/29/2025
 
 from pathlib import Path
 from navigation.constants import ERROR
@@ -19,6 +19,12 @@ class Bookmark:
         elif type(other) == Bookmark:
             return other.get_label() == self._label
         return False
+
+    def __lt__(self, other):
+        if type(other) == Bookmark:
+            return self.get_path() < other.get_path()
+        else:
+            raise NotImplementedError("Cannot compare a Bookmark to a "+str(type(other)))
 
     def get_label(self) -> str:
         return self._label
