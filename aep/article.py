@@ -2,7 +2,7 @@
 article.py
 Separated out of articleexamination.py on 11/29/23
 
-Summary: The Article class is used in the article-examination process
+Summary: The Article class is used in the aep process
 as a data container for each markdown file. The main program is designed
 to search through a directory, find all the markdown files, then hold
 each of the links written in the markdown files. We represent the markdown
