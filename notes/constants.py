@@ -1,10 +1,27 @@
 # constants.py
 # Written by: Will Plachno
 # Created: 08/22/24
-# Version: 0.0.2.002
-# Last Changed: 09/22/2025
+# Version: 0.0.2.003
+# Last Changed: 12/29/2025
 
 from utilities.wcconstants import COLOR, clr, OP, COLOUR
+
+class META:
+    NAME="wcn"
+    VERSION="0.0.2.003"
+    DESCRIPTION="A system for taking notes in the terminal that are localized to the working directory."
+    FOOTER="Created by Will Plachno. Copyright 2025."
+
+class ARGS:
+    class MODE:
+        NAME="mode"
+        DESCRIPTION="The mode we are operating in.\n  show - Lists notes\n  add - Adds a note\n  remove - Removes a note\n  move - Moves a note from one index to another\n  update - Changes a notes text\n  replace - Replaces a note completely\n  clear - Removes all notes"
+    class TARGET:
+        NAME="target"
+        DESCRIPTION="The targets needed to complete the script. Highly dependent on the mode, but could consist of a quoted string (when creating, updating, or replacing notes) or one or more note indices (when moving, removing, updating, or replacing notes). Note that the proper order would be source_index, destination_index, text."
+    class SECTION:
+        NAME="section"
+        DESCRIPTION="The notes are either stored in a user-wide 'Core' file or a 'Local' file in the working directory. The 'section' argument determines whether the script execution should pay attention to only the core (-c), only the local (-l), or both (-a) files."
 
 class MODE:
     DEFAULT="default"
