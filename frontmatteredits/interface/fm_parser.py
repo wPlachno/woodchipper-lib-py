@@ -1,31 +1,31 @@
 # fm_parser.py
 # Written by: Will Plachno
 # Created: 01/11/2025
-# Version: 0.0.1.007
-# Last Changed: 11/29/2025
+# Version: 0.0.1.008
+# Last Changed: 12/29/2025
 
 from os import getcwd
 from pathlib import Path
 
 from utilities.wcparser import CLParser as WCParser
 from utilities.wcutil import tail_matches_token as check_file_type
-from constants import MODE
+from frontmatteredits.constants import MODE, META, ARGS
 
 def build_parser():
-    parser = WCParser("frontmat",
-                      version="0.0.2.002",
-                      description="Allows for mass edits of YAML Frontmatter in Obsidian Markdown directories.",
-                      footer="Created by Will Plachno. Copyright 2025.")
-    parser.add_argument("mode", choices=[MODE.SHOW, MODE.ADD, MODE.REMOVE, MODE.SET, MODE.CHANGE, MODE.SUMMARIZE], default=MODE.SUMMARIZE,
-                        description="The mode we are operating in.\n  summarize - Shows all keys in the frontmatter of target files.\n  show - Shows all values associated with the given Key and what files they exist in.\n  add - Adds a new property to target files without editing it if it already exists.\n  set - Adds the property to each target file and sets all instances of the key to the given value.\n  change - Modifies any existing occurrences of the given key to the given value.\n  remove - Removes a property from the target files.\n")
-    parser.add_argument("key", description="The target key to be analyzed.")
-    parser.add_argument("value", description="The value for the given key.")
-    parser.add_argument("targets", nargs="+",
-                        description="A set of filenames that exist in the given directory that should be the only files considered 'targets'.")
-    parser.add_argument("--directory", "-directory", "-d", "-dir", default=getcwd(), shaper=path_shaper, nargs=1,
-                        description="A path to a directory that should be used for this script call.")
-    parser.add_argument("--filter", "-filter", "-f", nargs=1,
-                        description="Filters the Add, Set, Update, and Remove modes for files with a matching property. Should be formatted as \"key:value\".")
+    parser = WCParser(META.NAME,
+                      version=META.VERSION,
+                      description=META.DESCRIPTION,
+                      footer=META.FOOTER)
+    parser.add_argument(ARGS.MODE.NAME, choices=[MODE.SHOW, MODE.ADD, MODE.REMOVE, MODE.SET, MODE.CHANGE, MODE.SUMMARIZE], default=MODE.SUMMARIZE,
+                        description=ARGS.MODE.DESCRIPTION)
+    parser.add_argument(ARGS.KEY.NAME, description=ARGS.KEY.DESCRIPTION)
+    parser.add_argument(ARGS.VALUE.NAME, description=ARGS.VALUE.DESCRIPTION)
+    parser.add_argument(ARGS.TARGETS.NAME, nargs="+",
+                        description=ARGS.TARGETS.DESCRIPTION)
+    parser.add_argument(*ARGS.DIRECTORY.NAME, default=getcwd(), shaper=path_shaper, nargs=1,
+                        description=ARGS.DIRECTORY.DESCRIPTION)
+    parser.add_argument(*ARGS.FILTER.NAME, nargs=1,
+                        description=ARGS.FILTER.DESCRIPTION)
     return parser
 
 def post_parser(request):

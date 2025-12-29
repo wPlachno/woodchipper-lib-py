@@ -5,6 +5,32 @@
 
 from utilities.wcconstants import clr, COLOUR, OP
 
+class META:
+    NAME="frontmat"
+    VERSION="0.0.2.002"
+    DESCRIPTION="Allows for mass edits of YAML Frontmatter in Obsidian Markdown directories."
+    FOOTER="Created by Will Plachno. Copyright 2025."
+
+class ARGS:
+    class MODE:
+        NAME="mode"
+        DESCRIPTION="The mode we are operating in.\n  summarize - Shows all keys in the frontmatter of target files.\n  show - Shows all values associated with the given Key and what files they exist in.\n  add - Adds a new property to target files without editing it if it already exists.\n  set - Adds the property to each target file and sets all instances of the key to the given value.\n  change - Modifies any existing occurrences of the given key to the given value.\n  remove - Removes a property from the target files.\n"
+    class KEY:
+        NAME="key"
+        DESCRIPTION="The target key to be analyzed."
+    class VALUE:
+        NAME="value"
+        DESCRIPTION="The value for the given key."
+    class TARGETS:
+        NAME="targets"
+        DESCRIPTION="A set of filenames that exist in the given directory that should be the only files considered 'targets'."
+    class DIRECTORY:
+        NAME="--directory", "-directory", "-d", "-dir"
+        DESCRIPTION="A path to a directory that should be used for this script call."
+    class FILTER:
+        NAME="--filter", "-filter", "-f"
+        DESCRIPTION="Filters the Add, Set, Update, and Remove modes for files with a matching property. Should be formatted as \"key:value\"."
+
 class TOKEN:
     FRONTMATTER = "---"
     class LINK:
