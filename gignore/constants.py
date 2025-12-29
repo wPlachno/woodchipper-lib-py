@@ -1,5 +1,19 @@
 import utilities.wcconstants as S
 
+class META:
+    NAME="gignore"
+    VERSION="0.0.1.002"
+    DESCRIPTION="Take control of your .gitignore files."
+    FOOTER="Created by Will Plachno. Copyright 2025."
+
+class ARGS:
+    class MODE:
+        NAME="mode"
+        DESCRIPTION="Which mode to operate in.\n 'show' (default): display all nodes in the local .gitignore file.\n    'add': appends the target to the local .gitignore file.\n    'setup': appends batches of nodes to the .gitignore file.\n    'remove': deletes a node from the .gitignore file.\n    'clear': clears all nodes from the .gitignore file."
+    class TARGET:
+        NAME="target"
+        DESCRIPTION="The target for the script. Should be a valid .gignore node."
+
 class MODE:
     SETUP = "setup"
     SHOW = "show"
